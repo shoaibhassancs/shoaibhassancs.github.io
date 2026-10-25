@@ -1,0 +1,599 @@
+/* ===== NAVBAR ===== */
+
+/* Sticky navbar: translucent background, thin bottom border */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Navbar uses a wider container than the page, so the logo sits closer to the left edge */
+.site-header .container {
+  max-width: 1440px;
+  padding-inline: 40px;
+}
+
+/* Logo on the left, links on the right */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+}
+
+/* "portfolio." logo text (Sora) */
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* About / Services / Projects list, nudged left of the right edge */
+.nav-links {
+  display: flex;
+  gap: 28px;
+  margin: 0 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Nav link: muted, turns off-white with a moss underline on hover/focus */
+.nav-links a {
+  display: block;
+  padding: 10px 0 6px;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* Tighter navbar on tablet and mobile (room for three links) */
+@media (max-width: 760px) {
+  .site-header .container { padding-inline: var(--page-padding); }
+  .nav-links { gap: 22px; margin-right: 8px; }
+}
+@media (max-width: 500px) {
+  .logo { font-size: 1.15rem; }
+  .nav-links { gap: 14px; margin-right: 0; }
+  .nav-links a { font-size: 0.88rem; }
+}
+@media (max-width: 340px) {
+  .logo { font-size: 1.05rem; }
+  .nav-links { gap: 10px; }
+  .nav-links a { font-size: 0.82rem; }
+}
+
+
+/* ===== HERO ===== */
+
+/* Hero section: 66px gap below the navbar */
+.hero-section { padding-top: 66px; }
+
+/* Hero card: centered, narrower, subtle gradient, thin border */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 820px;
+  margin-inline: auto;
+  min-height: 300px;
+  padding: 40px 24px;
+  text-align: center;
+  background: linear-gradient(160deg, var(--panel) 0%, var(--bg) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-hero);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+/* Faint moss glow in the upper-right corner */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -50px;
+  width: 240px;
+  height: 240px;
+  background: var(--accent);
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* Keeps hero content above the glow */
+.hero > * { position: relative; }
+
+/* Hero name and title spacing and sizes */
+.hero .hero-name {
+  margin-top: 18px;
+  font-size: clamp(2.1rem, 6vw, 4.2rem);
+}
+.hero-title { margin-top: 20px; }
+.hero .hero-title {
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+}
+
+/* Row of circular icon links, centered as a group */
+.social-links {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.social-links li { flex: none; }
+
+/* Circular icon button */
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+/* Hover/focus: lift 3px, moss border, green surface */
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  background: var(--wash);
+}
+
+/* Mobile: smaller card, radius, padding, and text */
+@media (max-width: 500px) {
+  .hero { min-height: 260px; padding: 30px 16px; border-radius: 14px; }
+  .hero .hero-title { font-size: 0.85rem; letter-spacing: 0.14em; }
+}
+
+
+/* ===== RESUME BUTTON (grows on both sides on hover) ===== */
+
+/* Fixed 42px circle at rest; icon and label stay centered inside it */
+.icon-btn--expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  padding: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 280ms ease, transform var(--transition-fast),
+              border-color var(--transition-fast), background var(--transition-fast);
+}
+.icon-btn--expand svg { flex-shrink: 0; }
+
+/* Label: zero width and invisible until hover or keyboard focus */
+.icon-label {
+  display: block;
+  width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+  transition: width 280ms ease, margin-left 280ms ease, opacity 200ms ease;
+}
+
+/* Expand on hover or focus (mouse devices, windows wider than 560px) */
+@media (hover: hover) and (min-width: 561px) {
+  .icon-btn--expand:hover,
+  .icon-btn--expand:focus-visible {
+    width: 184px;
+  }
+  .icon-btn--expand:hover .icon-label,
+  .icon-btn--expand:focus-visible .icon-label {
+    width: 124px;
+    margin-left: 9px;
+    opacity: 1;
+  }
+}
+
+
+/* ===== SECTION LABELS (hero, services, and projects share one size) ===== */
+.hero .label,
+.services-section .label,
+.projects-section .label {
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+}
+@media (max-width: 500px) {
+  .hero .label,
+  .services-section .label,
+  .projects-section .label { font-size: 0.75rem; }
+}
+
+
+/* ===== SERVICES AND PROJECTS SECTIONS ===== */
+
+/* Each section starts 83px below the previous one */
+.services-section { padding-top: 83px; }
+.projects-section {
+  padding-top: 83px;
+  padding-bottom: 0;
+}
+
+/* Section headings ("Services." and "Projects.") */
+.services-heading,
+.projects-heading { margin-top: 12px; }
+
+/* Card grid (shared by services and projects): 3 columns, 2 on tablet, 1 on mobile */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) {
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .project-grid { grid-template-columns: minmax(0, 1fr); gap: 15px; margin-top: 36px; }
+}
+
+
+/* ===== PROJECT CARD (also used by service cards) ===== */
+
+/* Card: dark surface, thin border, lifts on hover */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: transform var(--transition-card), border-color var(--transition-card), box-shadow var(--transition-card);
+}
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Text area: grows so the bottom row always sits at the bottom */
+.project-body {
+  flex: 1;
+  padding: 26px 22px 24px;
+}
+
+/* Small uppercase category label ("COMPUTER VISION · 01") */
+.project-category {
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Card title */
+.project-title {
+  margin-top: 10px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+/* Short description */
+.project-desc {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+/* Technology tags: small moss labels, wrap naturally */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  padding: 5px 8px;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  color: var(--accent);
+  background: var(--pill);
+  border-radius: var(--radius-tag);
+}
+
+/* Optional live demo link */
+.project-demo {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.project-demo:hover { text-decoration: underline; }
+
+/* Bottom row: thin top border, text left, arrow right */
+.project-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: color var(--transition-fast);
+}
+.project-link-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-link-arrow { color: var(--accent); }
+.project-link:hover,
+.project-link:focus-visible { color: var(--accent); }
+
+
+/* ===== SERVICE CARD EXTRAS ===== */
+
+/* Service card is one big link */
+.service-card { color: inherit; }
+.service-card:focus-visible {
+  outline-offset: 4px;
+  border-radius: var(--radius-card);
+}
+
+/* Price and delivery row */
+.service-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.service-meta strong {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+/* Bottom row turns moss when the whole card is hovered or focused */
+.service-card:hover .project-link,
+.service-card:focus-visible .project-link { color: var(--accent); }
+
+
+/* ===== CARD PREVIEWS (CSS illustrations or screenshots) ===== */
+
+/* Preview area: full card width, 200px tall */
+.project-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Real screenshots fill the area */
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Soft geometric shape behind the panel */
+.project-preview::before {
+  content: "";
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+/* Screenshots: no shape behind them */
+.project-preview:has(img)::before { display: none; }
+
+/* Floating mini interface panel with three lines */
+.preview-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 116px;
+  padding: 16px 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.preview-panel span {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+.preview-panel span:first-child { width: 80%; background: var(--accent); }
+.preview-panel span:nth-child(2) { width: 100%; }
+.preview-panel span:nth-child(3) { width: 58%; }
+
+/* Variant 1: green surface, round shape centered */
+.preview-1 { background: var(--wash); }
+
+/* Variant 2: rosy-brown tint, rounded square shape, panel nudged right */
+.preview-2 { background: color-mix(in srgb, var(--accent-secondary) 14%, var(--panel)); }
+.preview-2::before {
+  border-radius: 22px;
+  transform: rotate(14deg) translateX(-26px);
+  background: color-mix(in srgb, var(--accent-secondary) 28%, transparent);
+}
+.preview-2 .preview-panel { transform: translateX(14px); }
+.preview-2 .preview-panel span:first-child { background: var(--accent-secondary); }
+
+/* Variant 3: moss-dominant surface, darker panel, ring shape, panel nudged down */
+.preview-3 { background: color-mix(in srgb, var(--accent) 22%, var(--bg)); }
+.preview-3::before {
+  width: 110px;
+  height: 110px;
+  background: none;
+  border: 14px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  transform: translate(30px, -14px);
+}
+.preview-3 .preview-panel {
+  background: color-mix(in srgb, var(--bg) 90%, black);
+  transform: translateY(8px);
+}
+
+
+/* ===== BIOGRAPHY ===== */
+
+/* 100px below the cards, then a thin top border */
+.bio-section { padding-bottom: 90px; }
+.bio {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+  margin-top: 100px;
+  padding-top: 56px;
+  border-top: 1px solid var(--line);
+}
+
+/* Circular avatar: initials by default, or a photo */
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 125px;
+  height: 125px;
+  overflow: hidden;
+  background: var(--wash);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+}
+.avatar span {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "A BIT MORE ABOUT ME" heading */
+.bio-heading {
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Biography paragraph */
+.bio-paragraph {
+  max-width: 820px;
+  font-size: 0.93rem;
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+/* Closing row: interests left, email link right */
+.bio-closing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  max-width: 820px;
+  margin-top: 28px;
+}
+.bio-tags {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.bio-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.bio-link:hover,
+.bio-link:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Narrow screens: avatar stacked above the text, closing row stacked */
+@media (max-width: 600px) {
+  .bio {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 70px;
+    padding-top: 40px;
+  }
+  .avatar { width: 96px; height: 96px; }
+  .avatar span { font-size: 1.6rem; }
+  .bio-closing { flex-direction: column; align-items: flex-start; }
+}
+
+
+/* ===== FOOTER ===== */
+
+/* Thin top border, copyright left, tagline right */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 0 30px;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+@media (max-width: 500px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
